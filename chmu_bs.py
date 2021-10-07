@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import urllib3
 import pandas as pd
+import re
 
 start_urls = ['https://www.chmi.cz/files/portal/docs/meteo/opss/pocasicko_nove/st_11464_cz.html', #milesovka
     "https://www.chmi.cz/files/portal/docs/meteo/opss/pocasicko_nove/st_11520_cz.html", #praha-libus
@@ -44,14 +45,17 @@ def chmi_scraper(start_url):
         texts2.append(row_texts)
 
     ## Strips comments that are not static
-    texts2[0][8]
+    keyss = [texts2[i][0]for i in range(1, len(texts2))]
+    x = keyss[8]
+    y = re.sub("[\(].*?[\)]", "", x)
+    keyss[8] = y
 
     ## Takes data only from the exact time
     texts2_in_time = [row[2] for row in texts2]
 
     ## Prepares the data for conversion into csv. Makes dictionary with keys as column names.
     data2 = {
-        texts2[i][0]: texts2_in_time[i] for i in range(1, len(texts2))
+        keyss[i]: texts2_in_time[i] for i in range(1, len(keyss))
     }
 
     #Third table - klimatické údaje
@@ -84,4 +88,4 @@ for url in start_urls:
 
 result = pd.concat(frames)
 
-result.to_csv("out/tables/chmu_tab.csv", index=False)
+result.to_csv("chmu_tab.csv", index=False)
