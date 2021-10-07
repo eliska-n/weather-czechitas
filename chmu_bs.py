@@ -3,7 +3,7 @@ import urllib3
 import pandas as pd
 import re
 
-start_urls = ['https://www.chmi.cz/files/portal/docs/meteo/opss/pocasicko_nove/st_11464_cz.html', #milesovka
+start_urls = [#'https://www.chmi.cz/files/portal/docs/meteo/opss/pocasicko_nove/st_11464_cz.html', #milesovka
     "https://www.chmi.cz/files/portal/docs/meteo/opss/pocasicko_nove/st_11520_cz.html", #praha-libus
 ]
 
@@ -45,10 +45,10 @@ def chmi_scraper(start_url):
         texts2.append(row_texts)
 
     ## Strips comments that are not static
-    keyss = [texts2[i][0]for i in range(1, len(texts2))]
-    x = keyss[8]
+    keyss = [texts2[i][0]for i in range(0, len(texts2))]
+    x = keyss[10]
     y = re.sub("[\(].*?[\)]", "", x)
-    keyss[8] = y
+    keyss[10] = y
 
     ## Takes data only from the exact time
     texts2_in_time = [row[2] for row in texts2]
@@ -69,12 +69,18 @@ def chmi_scraper(start_url):
         row_texts = [cell.get_text() for cell in row.find_all("td")]
         texts3.append(row_texts)
 
+    ## Strips comments that are not static
+    keysss = [texts3[i][0]for i in range(0, len(texts3))]
+    xx = keysss[6]
+    yy = re.sub("[\(].*?[\)]", "", xx)
+    keysss[6] = yy
+
     ## Takes data only from the exact date
     texts3_in_date = [row[2] for row in texts3]
 
     ## Prepares the data for conversion into csv. Makes dictionary with keys as column names.
     data3 = {
-        texts3[i][0]: texts3_in_date[i] for i in range(1, len(texts3))
+        keysss[i]: texts3_in_date[i] for i in range(1, len(keysss))
     }
 
     # Merges dictionaries
