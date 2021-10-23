@@ -2,7 +2,6 @@ import pandas as pd
 import datetime
 
 df = pd.read_csv("dataset_weathercom1_2021-10-23_09-07-04-902.csv", encoding="utf-8")
-print(df.head())
 
 #url = "https://weather.com/weather/tenday/l/" + locationID
 locationIDs = {
@@ -47,3 +46,13 @@ locationIDs = {
     "Lysá hora": "20e28455a2d19334c93f946dc702bbfc982b1aea146ec4bf27269148abfca46d", 
     "Maruška": "cf9533286d3c14eb7cd642aa43b0e56aeae3b0877f0bba48f6809cb627f8a800", 
 }
+
+d={"location_name":locationIDs.keys(), 
+"locationId":locationIDs.values(), }
+
+locationsdf = pd.DataFrame.from_dict(d, orient="columns")
+joindf = pd.merge(df, locationsdf, on="locationId")
+
+joindf["date_stamp"] = datetime.datetime.now().strftime("%Y-%m-%d %H:00:00")
+
+joindf.to_csv("weathercom_tab.csv", index=False)
