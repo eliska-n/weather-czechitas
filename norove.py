@@ -44,7 +44,7 @@ for i in range(len(usti_forecast.data.intervals)):
 
 yrdf = yrdf.drop([0])
 now = datetime.now()
-yrdf["date_stamp"] = now.strftime("%d/%m/%Y %H:00:00")
+yrdf["date_stamp"] = now.strftime("%Y-%m-%d %H:00:00")
 yrdf.to_csv("yr_tab.csv", index=False)
 
 
