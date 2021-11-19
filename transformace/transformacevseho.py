@@ -1,6 +1,5 @@
 import pandas as pd
 import datetime
-import matplotlib.pyplot as plt
 import re
 
 # 1.) CHMI - TEPLOTY
