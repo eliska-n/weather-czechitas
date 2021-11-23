@@ -150,6 +150,8 @@ df_yrno_g.loc[df_yrno_g["yr_rain_sum"] == 0, "rain_bool"] = False
 df_ow = pd.read_csv("in/tables/openweather_tab.csv")
 df_ow["temp_mean"] = df_ow[["temp_day", "temp_eve", "temp_morn", "temp_night"]].mean(axis=1)
 df_ow = df_ow.drop(columns=["humidity", "temp_day", "temp_eve", "temp_morn", "temp_night"])
+df_ow["date_stamp"] = pd.to_datetime(df_ow["date_stamp"])
+df_ow = df_ow[(df_ow["date_stamp"].dt.time.astype(str) == "19:00:00") | (df_ow["date_stamp"].dt.time.astype(str) == "20:00:00")]
 df_ow["fday"] = pd.to_numeric(((pd.to_datetime(df_ow["forecast_dt"]).dt.date) - (pd.to_datetime(df_ow["date_stamp"]).dt.date)).astype("string").str.strip(" days"))
 df_ow["forecast_dt"] = pd.to_datetime(df_ow["forecast_dt"]).dt.strftime('%Y-%m-%d')
 df_ow = df_ow.rename(columns={"forecast_dt": "forecast_date"})

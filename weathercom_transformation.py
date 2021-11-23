@@ -3,7 +3,7 @@ import datetime
 
 df = pd.read_csv("dataset_weathercom1_2021-10-23_09-07-04-902.csv", encoding="utf-8")
 
-#url = "https://weather.com/weather/tenday/l/" + locationID
+#url = "https://weather.com/weather/tenday/l/" + locationID 
 locationIDs = {
     "Cheb" : "61abc6b803796e59d6b735e0a8394abcbaa25575a360d0ab8b0e772a38b845f7",
     "Karlovy Vary" : "c156caec7a5e871553e6769e82bb24a5e9d23172b2a8e387124ca61e64f71b4b", 
